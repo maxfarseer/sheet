@@ -1,0 +1,18 @@
+.issue__th {
+  cursor: pointer;
+}
+.issue__th, .issue__td {
+  padding: 0 15px 0 0;
+}
+.issue__row:nth-child(2n) {
+  background: #EEE;
+}
+.issue__td_child {
+  background: #FF0000;
+}
+.glyphicon {
+  display: none;
+}
+.issue__th.active .glyphicon{
+  display: inline-block;
+}

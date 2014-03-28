@@ -1,0 +1,124 @@
+[
+  {
+    "id":"0001",
+    "parent":"",
+    "child":"0002,0003,0004",
+    "description": "Родитель",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "0"
+  },
+  {
+    "id":"0002",
+    "parent":"0001",
+    "child":"0005,0006",
+    "description": "Родитель 0001 + дети 5,6",
+    "assignee": "Tom",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0003",
+    "parent":"0001",
+    "child":"",
+    "description": "Родитель 0001",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0004",
+    "parent":"0001",
+    "child":"",
+    "description": "Родитель 0001",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0005",
+    "parent":"0002",
+    "child":"",
+    "description": "Родитель 0002",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "2"
+  },
+  {
+    "id":"0006",
+    "parent":"0002",
+    "child":"",
+    "description": "Родитель 0002",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "2"
+  },
+
+
+  {
+    "id":"0007",
+    "parent":"",
+    "child":"0008,0009,0010",
+    "description": "Родитель",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "0"
+  },
+  {
+    "id":"0008",
+    "parent":"0007",
+    "child":"00011,00012",
+    "description": "Родитель 0007 + дети 11,12",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0009",
+    "parent":"0007",
+    "child":"",
+    "description": "Родитель 0007",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0010",
+    "parent":"0007",
+    "child":"",
+    "description": "Родитель 0007",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "1"
+  },
+  {
+    "id":"0011",
+    "parent":"0008",
+    "child":"",
+    "description": "Родитель 0008",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "2"
+  },
+  {
+    "id":"0012",
+    "parent":"0008",
+    "child":"",
+    "description": "Родитель 0008",
+    "assignee": "Max",
+    "priority": "0",
+    "status": "n/a",
+    "level": "2"
+  }
+]
