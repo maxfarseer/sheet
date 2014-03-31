@@ -27,16 +27,7 @@ angular.module('angleMineApp')
 
       $scope.issues = requirements;
       console.log(requirements);
-
-/*      _.each(requirements, function(o) {
-        console.log(o.descendants); //children total 1 lvl
-        if (o.descendants.length) {
-          _.each(o.descendants, function(oChild) {
-            //console.log(oChild); //children list lvl 2
-            requirements.push(oChild);
-          });
-        }
-      });*/
+      //$scope.tempReq = angular.copy(requirements);
 
       function buildTrees(requirements){
         _.each(requirements, function(requirement){
@@ -51,7 +42,6 @@ angular.module('angleMineApp')
         _.each(descendants, function(descendant, index){
           descendant.descendants = [];
           descendants[index] = descendant;
-          console.log(descendant);
         });
         _.each(descendants, function(descendant){
           if(descendant.parent_id !== parentId){
@@ -63,6 +53,28 @@ angular.module('angleMineApp')
       }
 
       buildTrees(requirements);
+
+      //level for padding
+      _.each(requirements, function(r) {
+        checkChilds(r);
+      });
+
+      function checkChilds(o) {
+        for (var i = 0; i < o.descendants.length; i++) {
+          setLvl(o.descendants[i],1);
+        }
+      }
+
+      function setLvl(o, lvl) {
+        o.level = lvl;
+        if (o.descendants.length) {
+          for (var i = 0; i < o.descendants.length; i++) {
+            setLvl(o.descendants[i],lvl+1);
+          }
+        } else {
+          o.level = lvl;
+        }
+      }
 
     });
 
