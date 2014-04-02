@@ -25,9 +25,8 @@ angular.module('angleMineApp')
 
       var requirements = _.filter(data.requirements, {tracker_id: 15});
 
-      $scope.issues = requirements;
-      console.log(requirements);
       //$scope.tempReq = angular.copy(requirements);
+      $scope.issues = requirements;
 
       function buildTrees(requirements){
         _.each(requirements, function(requirement){
@@ -75,7 +74,31 @@ angular.module('angleMineApp')
           o.level = lvl;
         }
       }
+      //end lvl for padding
 
     });
+  })
+  .filter('sortParent', function() {
+    return function(requirements) {
+      var flatSorted = [];
 
+      _.each(requirements, function(r) {
+        flatSorted.push(r);
+        if (r.descendants.length > 0) {
+          for (var i = 0; i < r.descendants.length; i++) {
+            fillFlatSorted(r.descendants[i]);
+          }
+        }
+      });
+
+      function fillFlatSorted(o) {
+        flatSorted.push(o);
+        if (o.descendants.length) {
+          for (var i = 0; i < o.descendants.length; i++) {
+            fillFlatSorted(o.descendants[i]);
+          }
+        }
+      }
+      return flatSorted;
+    };
   });

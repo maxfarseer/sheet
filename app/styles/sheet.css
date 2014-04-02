@@ -1,3 +1,9 @@
+.issues {
+  border: 1px solid #EEE;
+}
+.issues td {
+  border: 1px solid #EEE;
+}
 .issue__th {
   cursor: pointer;
 }
@@ -8,7 +14,7 @@
   background: #EEE;
 }
 .issue__td_child {
-  background: #FF0000;
+  background: #DFE1F3;
 }
 .glyphicon {
   display: none;
