@@ -26,7 +26,6 @@ angular.module('angleMineApp')
       var requirements = _.filter(data.requirements, {tracker_id: 15});
 
       //$scope.tempReq = angular.copy(requirements);
-      $scope.issues = requirements;
 
       function buildTrees(requirements){
         _.each(requirements, function(requirement){
@@ -76,14 +75,19 @@ angular.module('angleMineApp')
       }
       //end lvl for padding
 
+      $scope.issues = requirements;
     });
   })
   .filter('sortParent', function() {
-    return function(requirements) {
-      var flatSorted = [];
+    return function(requirements,check) {
+      console.log(check);
+      var flatSorted = [],
+          uniqFlatSorted;
 
       _.each(requirements, function(r) {
-        flatSorted.push(r);
+        if (!r.parent_id) {
+          flatSorted.push(r);
+        }
         if (r.descendants.length > 0) {
           for (var i = 0; i < r.descendants.length; i++) {
             fillFlatSorted(r.descendants[i]);
@@ -99,6 +103,9 @@ angular.module('angleMineApp')
           }
         }
       }
+      uniqFlatSorted = _.uniq(requirements, function(r) {return r.id;});
+      console.log(flatSorted);
+
       return flatSorted;
     };
   });

@@ -1,6 +1,7 @@
 
 <div class="row">
   <div class="md-12">
+    <input type="checkbox" ng-init="checkbox=true;" ng-model="checkbox">
     <table class="issues">
       <tr>
         <th class="issue__th" ng-class="{'active':val==orderValue}" ng-repeat="val in th" ng-click="orderReq(val);">
@@ -8,11 +9,14 @@
           <span class="glyphicon {{'glyphicon-arrow-'+(sheet.orderReverse?'up':'down')}}"></span>
         </th>
       </tr>
-        <tr class="issue__row" ng-repeat="req in issues | sortParent"> <!--orderBy:orderValue:sheet.orderReverse -->
+        <tr class="issue__row" ng-repeat="req in issues | sortParent:checkbox"> <!--orderBy:orderValue:sheet.orderReverse -->
           <td class="issue__td">{{req.id}}</td>
           <td class="issue__td">{{req.parent_id}}</td>
-          <td class="issue__td" ng-style="{paddingLeft:req.level*10}" ng-class="{'issue__td_child':req.parent_id}">{{req.description}}</td>
-          <td class="issue__td">{{req.created_on}}</td>
+          <td class="issue__td" ng-class="{'issue__td_child':req.parent_id}">
+            <div ng-if="req.parent_id" class="issue__hline"></div>
+              <div ng-style="{paddingLeft:req.level*20}">{{req.description}}</div>
+          </td>
+          <td class="issue__td issue__td_date">{{req.created_on | date:'short'}}</td>
           <td class="issue__td">{{req.priority_id}}</td>
           <td class="issue__td">{{req.tracker_id}}</td>
         </tr>

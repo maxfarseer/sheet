@@ -7,7 +7,7 @@
 .issue__th {
   cursor: pointer;
 }
-.issue__th, .issue__td {
+.issue__th {
   padding: 0 15px 0 0;
 }
 .issue__row:nth-child(2n) {
@@ -15,10 +15,24 @@
 }
 .issue__td_child {
   background: #DFE1F3;
+  position: relative;
+}
+.issue__td_date {
+  width: 130px;
 }
 .glyphicon {
   display: none;
 }
 .issue__th.active .glyphicon{
   display: inline-block;
+}
+
+/*lines*/
+.issue__hline { /*horizontal line*/
+  width: 2px;
+  background: #000;
+  position: absolute;
+  z-index: 3;
+  left: 15px;
+  height: 100%;
 }
