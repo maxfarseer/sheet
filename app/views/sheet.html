@@ -2,33 +2,41 @@
 <div class="row">
   <div class="md-12">
 
-    <div class="radio">
-      <label>
-        <input type="radio" ng-init="checkbox='tree-req-tasks'" ng-model="checkbox" value="tree-req-tasks">
-        Задача с родительским требованием (дерево)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" ng-model="checkbox" value="list-tasks">
-        Только задачи (список)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" ng-model="checkbox" value="tree-req">
-        Только требования (дерево)
-      </label>
-    </div>
+    <div class="filters">
+      <div class="radio">
+        <label>
+          <input type="radio" ng-init="checkbox='tree-req-tasks'" ng-model="checkbox" value="tree-req-tasks">
+          Задача с родительским требованием (дерево)
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" ng-model="checkbox" value="list-tasks">
+          Только задачи (список)
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" ng-model="checkbox" value="tree-req">
+          Только требования (дерево)
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Фильтр</label>
+        <input type="text" class="form-control" ng-model="q.description" placeholder="описание задачи">
+      </div>
+
+    </div> <!-- ./filters -->
 
     <table class="issues">
       <tr>
         <th class="issue__th" ng-class="{'active':val==orderValue}" ng-repeat="val in th" ng-click="orderReq(val);">
           {{val}}
-          <span class="glyphicon {{'glyphicon-arrow-'+(sheet.orderReverse?'up':'down')}}"></span>
+          <!-- <span class="glyphicon {{'glyphicon-arrow-'+(sheet.orderReverse?'up':'down')}}"></span> -->
         </th>
       </tr>
-        <tr class="issue__row" ng-repeat="req in issues | sortParent:checkbox"> <!--orderBy:orderValue:sheet.orderReverse -->
+        <tr class="issue__row" ng-repeat="req in issues | sortParent:checkbox:q | filter:q"> <!--orderBy:orderValue:sheet.orderReverse -->
           <td class="issue__td">{{req.id}}</td>
           <td class="issue__td">{{req.parent_id}}</td>
           <td class="issue__td" ng-class="{'issue__td_child':req.parent_id}">
