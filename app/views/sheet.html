@@ -1,7 +1,26 @@
 
 <div class="row">
   <div class="md-12">
-    <input type="checkbox" ng-init="checkbox=true;" ng-model="checkbox">
+
+    <div class="radio">
+      <label>
+        <input type="radio" ng-init="checkbox='tree-req-tasks'" ng-model="checkbox" value="tree-req-tasks">
+        Задача с родительским требованием (дерево)
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" ng-model="checkbox" value="list-tasks">
+        Только задачи (список)
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" ng-model="checkbox" value="tree-req">
+        Только требования (дерево)
+      </label>
+    </div>
+
     <table class="issues">
       <tr>
         <th class="issue__th" ng-class="{'active':val==orderValue}" ng-repeat="val in th" ng-click="orderReq(val);">

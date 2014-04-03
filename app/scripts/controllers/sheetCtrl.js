@@ -76,36 +76,80 @@ angular.module('angleMineApp')
       //end lvl for padding
 
       $scope.issues = requirements;
+
     });
   })
   .filter('sortParent', function() {
     return function(requirements,check) {
-      console.log(check);
-      var flatSorted = [],
-          uniqFlatSorted;
+      var arr = [];
 
-      _.each(requirements, function(r) {
-        if (!r.parent_id) {
-          flatSorted.push(r);
-        }
-        if (r.descendants.length > 0) {
-          for (var i = 0; i < r.descendants.length; i++) {
-            fillFlatSorted(r.descendants[i]);
-          }
-        }
-      });
-
-      function fillFlatSorted(o) {
-        flatSorted.push(o);
+      function fillTreeReqsTasks(o) {
+        arr.push(o);
         if (o.descendants.length) {
           for (var i = 0; i < o.descendants.length; i++) {
-            fillFlatSorted(o.descendants[i]);
+            fillTreeReqsTasks(o.descendants[i]);
           }
         }
       }
-      uniqFlatSorted = _.uniq(requirements, function(r) {return r.id;});
-      console.log(flatSorted);
 
-      return flatSorted;
+      function fillListTasks(o) {
+        if (o.tracker_id !== 15) {
+          arr.push(o);
+        }
+        for (var i = 0; i < o.descendants.length; i++) {
+          fillListTasks(o.descendants[i]);
+        }
+      }
+
+      function fillTreeReqs(o) {
+        if (o.tracker_id === 15) {
+          arr.push(o);
+        }
+        for (var i = 0; i < o.descendants.length; i++) {
+          fillTreeReqs(o.descendants[i]);
+        }
+      }
+
+      switch (check) {
+        case 'tree-req-tasks':
+          _.each(requirements, function(r) {
+            if (!r.parent_id) {
+              arr.push(r);
+            }
+            if (r.descendants.length > 0) {
+              for (var i = 0; i < r.descendants.length; i++) {
+                fillTreeReqsTasks(r.descendants[i]);
+              }
+            }
+          });
+          break;
+
+        case 'list-tasks':
+          _.each(requirements, function(r) {
+            if (r.descendants.length > 0) {
+              for (var i = 0; i < r.descendants.length; i++) {
+                fillListTasks(r.descendants[i]);
+              }
+            }
+          });
+          break;
+
+        case 'tree-req':
+        //need refactor: copypaste from tree-req-tasks
+          _.each(requirements, function(r) {
+            if (!r.parent_id) {
+              arr.push(r);
+            }
+            if (r.descendants.length > 0) {
+              for (var i = 0; i < r.descendants.length; i++) {
+                fillTreeReqs(r.descendants[i]);
+              }
+            }
+          });
+          break;
+      }//switch case end
+
+      return arr;
+
     };
   });
