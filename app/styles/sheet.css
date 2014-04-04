@@ -36,3 +36,9 @@
   left: 15px;
   height: 100%;
 }
+.editable {
+  width: 100%;
+  color: #FF0000;
+  border: none;
+  padding: 0;
+}

@@ -3,7 +3,7 @@
 angular.module('angleMineApp')
   .controller('sheetCtrl', function ($scope) {
     //config?
-    $scope.th = ['id','parent_id','description','create_on','priority_id','tracker_id'];
+    $scope.th = ['id','parent_id','title','create_on','priority_id','tracker_id'];
     $scope.sheet = {};
     $scope.sheet.orderReverse = false;
     $scope.sheet.glyphArrow = true;
@@ -74,6 +74,10 @@ angular.module('angleMineApp')
         }
       }
       //end lvl for padding
+
+      $scope.editSubject = function(req) {
+        req.editable = true;
+      };
 
       $scope.issues = requirements;
 
@@ -151,5 +155,10 @@ angular.module('angleMineApp')
 
       return arr;
 
+    };
+  })
+  .directive('clickTrigger', function() {
+    return function(scope, element) {
+      element.focus();
     };
   });

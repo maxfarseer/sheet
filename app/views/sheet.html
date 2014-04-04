@@ -24,7 +24,7 @@
 
       <div class="form-group">
         <label>Фильтр</label>
-        <input type="text" class="form-control" ng-model="q.description" placeholder="описание задачи">
+        <input type="text" class="form-control" ng-model="q.subject" placeholder="описание задачи">
       </div>
 
     </div> <!-- ./filters -->
@@ -41,7 +41,10 @@
           <td class="issue__td">{{req.parent_id}}</td>
           <td class="issue__td" ng-class="{'issue__td_child':req.parent_id}">
             <div ng-if="req.parent_id" class="issue__hline"></div>
-              <div ng-style="{paddingLeft:req.level*20}">{{req.description}}</div>
+              <div ng-style="{paddingLeft:req.level*20}" ng-dblclick="editSubject(req)">
+                <span ng-if="!req.editable;">{{req.subject}}</span>
+                <input class="editable" type="text" ng-model="req.subject" ng-if="req.editable;" click-trigger>
+              </div>
           </td>
           <td class="issue__td issue__td_date">{{req.created_on | date:'short'}}</td>
           <td class="issue__td">{{req.priority_id}}</td>
