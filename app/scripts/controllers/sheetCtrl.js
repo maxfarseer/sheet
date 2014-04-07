@@ -3,7 +3,7 @@
 angular.module('angleMineApp')
   .controller('sheetCtrl', function ($scope) {
     //config?
-    $scope.th = ['id','parent_id','title','create_on','priority_id','tracker_id'];
+    $scope.th = ['id','parent_id','subject','created_on','priority_id','tracker_id'];
     $scope.sheet = {};
     $scope.sheet.orderReverse = false;
     $scope.sheet.glyphArrow = true;
@@ -84,8 +84,11 @@ angular.module('angleMineApp')
     });
   })
   .filter('sortParent', function() {
-    return function(requirements,check) {
+    return function(requirements,check,order) {
       var arr = [];
+      requirements = _.sortBy(requirements, function(elem) {
+        return elem[order];
+      });
 
       function fillTreeReqsTasks(o) {
         arr.push(o);
@@ -116,6 +119,7 @@ angular.module('angleMineApp')
 
       switch (check) {
         case 'tree-req-tasks':
+
           _.each(requirements, function(r) {
             if (!r.parent_id) {
               arr.push(r);
@@ -154,10 +158,9 @@ angular.module('angleMineApp')
       }//switch case end
 
       return arr;
-
     };
   })
-  .directive('clickTrigger', function() {
+  .directive('reqEdit', function() {
     return function(scope, element) {
       element.focus();
     };
