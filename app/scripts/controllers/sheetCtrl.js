@@ -86,16 +86,17 @@ angular.module('angleMineApp')
   .filter('sortParent', function() {
     return function(requirements,check,order) {
       var arr = [];
-      requirements = _.sortBy(requirements, function(elem) {
-        return elem[order];
+
+      requirements = _.sortBy(requirements, function(req) {
+        return req[order];
       });
 
       function fillTreeReqsTasks(o) {
         arr.push(o);
         if (o.descendants.length) {
-          for (var i = 0; i < o.descendants.length; i++) {
-            fillTreeReqsTasks(o.descendants[i]);
-          }
+          _.each(o.descendants, function(obj) {
+            fillTreeReqsTasks(obj);
+          });
         }
       }
 
@@ -103,18 +104,18 @@ angular.module('angleMineApp')
         if (o.tracker_id !== 15) {
           arr.push(o);
         }
-        for (var i = 0; i < o.descendants.length; i++) {
-          fillListTasks(o.descendants[i]);
-        }
+        _.each(o.descendants, function(obj) {
+          fillListTasks(obj);
+        });
       }
 
       function fillTreeReqs(o) {
         if (o.tracker_id === 15) {
           arr.push(o);
         }
-        for (var i = 0; i < o.descendants.length; i++) {
-          fillTreeReqs(o.descendants[i]);
-        }
+        _.each(o.descendants, function(obj) {
+          fillTreeReqs(obj);
+        });
       }
 
       switch (check) {
@@ -125,9 +126,10 @@ angular.module('angleMineApp')
               arr.push(r);
             }
             if (r.descendants.length > 0) {
-              for (var i = 0; i < r.descendants.length; i++) {
-                fillTreeReqsTasks(r.descendants[i]);
-              }
+              console.log(r.descendants);
+              _.each(r.descendants, function(obj) {
+                fillTreeReqsTasks(obj);
+              });
             }
           });
           break;
@@ -135,9 +137,9 @@ angular.module('angleMineApp')
         case 'list-tasks':
           _.each(requirements, function(r) {
             if (r.descendants.length > 0) {
-              for (var i = 0; i < r.descendants.length; i++) {
-                fillListTasks(r.descendants[i]);
-              }
+              _.each(r.descendants, function(obj) {
+                fillListTasks(obj);
+              });
             }
           });
           break;
@@ -149,9 +151,9 @@ angular.module('angleMineApp')
               arr.push(r);
             }
             if (r.descendants.length > 0) {
-              for (var i = 0; i < r.descendants.length; i++) {
-                fillTreeReqs(r.descendants[i]);
-              }
+              _.each(r.descendants, function(obj) {
+                fillTreeReqs(obj);
+              });
             }
           });
           break;
