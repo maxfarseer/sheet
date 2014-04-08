@@ -118,6 +118,21 @@ angular.module('angleMineApp')
         });
       }
 
+      function sortChild(o) {
+        o.descendants = _.sortBy(o, function(obj) {
+          _.each(o, function(childObj) {
+            /*if (childObj.descendants) {
+              _.each(childObj.descendants, function(innerObj) {
+                console.log(innerObj);
+              });
+            }*/
+          });
+
+          return obj[order];
+        });
+        return o.descendants;
+      }
+
       switch (check) {
         case 'tree-req-tasks':
 
@@ -126,7 +141,8 @@ angular.module('angleMineApp')
               arr.push(r);
             }
             if (r.descendants.length > 0) {
-              console.log(r.descendants);
+              r.descendants = sortChild(r.descendants); // сортируем детей второго уровня
+
               _.each(r.descendants, function(obj) {
                 fillTreeReqsTasks(obj);
               });
