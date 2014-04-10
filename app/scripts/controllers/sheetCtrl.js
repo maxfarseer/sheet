@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angleMineApp')
-  .controller('sheetCtrl', function ($scope) {
+  .controller('SheetCtrl', function ($scope) {
     //config?
     $scope.th = ['id','parent_id','subject','created_on','priority_id','tracker_id'];
     $scope.sheet = {};

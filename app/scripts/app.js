@@ -16,7 +16,7 @@ app.config(function ($routeProvider) {
     })
     .when('/sheet', {
       templateUrl: 'views/sheet.html',
-      controller: 'sheetCtrl',
+      controller: 'SheetCtrl',
     })
     .otherwise({
       redirectTo: '/'
