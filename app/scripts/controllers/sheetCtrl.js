@@ -25,8 +25,6 @@ angular.module('angleMineApp')
 
       var requirements = _.filter(data.requirements, {tracker_id: 15});
 
-      //$scope.tempReq = angular.copy(requirements);
-
       function buildTrees(requirements){
         _.each(requirements, function(requirement){
           requirement.totalChildren = requirement.descendants.length;
@@ -58,19 +56,17 @@ angular.module('angleMineApp')
       });
 
       function checkChilds(o) {
-        for (var i = 0; i < o.descendants.length; i++) {
-          setLvl(o.descendants[i],1);
-        }
+        _.each(o.descendants, function(obj) {
+          setLvl(obj,1);
+        });
       }
 
       function setLvl(o, lvl) {
         o.level = lvl;
         if (o.descendants.length) {
-          for (var i = 0; i < o.descendants.length; i++) {
-            setLvl(o.descendants[i],lvl+1);
-          }
-        } else {
-          o.level = lvl;
+          _.each(o.descendants, function(obj) {
+            setLvl(obj,lvl+1);
+          });
         }
       }
       //end lvl for padding
@@ -91,61 +87,47 @@ angular.module('angleMineApp')
         return req[order];
       });
 
-      function fillTreeReqsTasks(o) {
-        arr.push(o);
-        if (o.descendants.length) {
-          _.each(o.descendants, function(obj) {
-            fillTreeReqsTasks(obj);
+      function fillTreeReqsTasks(array) {
+        if (array.length) {
+          array = _.sortBy(array, function(elem) {
+            return elem[order];
+          });
+
+          _.each(array, function(obj) {
+            arr.push(obj);
+            fillTreeReqsTasks(obj.descendants);
           });
         }
       }
 
-      function fillListTasks(o) {
-        if (o.tracker_id !== 15) {
-          arr.push(o);
-        }
-        _.each(o.descendants, function(obj) {
-          fillListTasks(obj);
+      function fillListTasks(array) {
+        array = _.sortBy(array, function(elem) {
+          return elem[order];
+        });
+
+        _.each(array, function(obj) {
+          arr.push(obj);
+          fillListTasks(obj.descendants);
         });
       }
 
-      function fillTreeReqs(o) {
-        if (o.tracker_id === 15) {
-          arr.push(o);
-        }
-        _.each(o.descendants, function(obj) {
-          fillTreeReqs(obj);
+      function fillTreeReqs(array) {
+        _.each(array, function(obj) {
+          if (obj.tracker_id === 15) {
+            arr.push(obj);
+          }
+          fillTreeReqs(obj.descendants);
         });
-      }
-
-      function sortChild(o) {
-        o.descendants = _.sortBy(o, function(obj) {
-          _.each(o, function(childObj) {
-            /*if (childObj.descendants) {
-              _.each(childObj.descendants, function(innerObj) {
-                console.log(innerObj);
-              });
-            }*/
-          });
-
-          return obj[order];
-        });
-        return o.descendants;
       }
 
       switch (check) {
         case 'tree-req-tasks':
-
           _.each(requirements, function(r) {
             if (!r.parent_id) {
               arr.push(r);
             }
             if (r.descendants.length > 0) {
-              r.descendants = sortChild(r.descendants); // сортируем детей второго уровня
-
-              _.each(r.descendants, function(obj) {
-                fillTreeReqsTasks(obj);
-              });
+              fillTreeReqsTasks(r.descendants);
             }
           });
           break;
@@ -153,9 +135,7 @@ angular.module('angleMineApp')
         case 'list-tasks':
           _.each(requirements, function(r) {
             if (r.descendants.length > 0) {
-              _.each(r.descendants, function(obj) {
-                fillListTasks(obj);
-              });
+              fillListTasks(r.descendants);
             }
           });
           break;
@@ -167,9 +147,7 @@ angular.module('angleMineApp')
               arr.push(r);
             }
             if (r.descendants.length > 0) {
-              _.each(r.descendants, function(obj) {
-                fillTreeReqs(obj);
-              });
+              fillTreeReqs(r.descendants);
             }
           });
           break;

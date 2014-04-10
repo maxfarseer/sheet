@@ -20,9 +20,6 @@
 .issue__td_date {
   width: 130px;
 }
-.glyphicon {
-  display: none;
-}
 .issue__th.active .glyphicon{
   display: inline-block;
 }
